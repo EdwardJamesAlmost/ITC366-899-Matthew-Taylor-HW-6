@@ -46,8 +46,7 @@ namespace ITC366_899_Matthew_Taylor_HW_6
             * 
             * Improvement notes: implement break and continue statements
             */
-
-            while (continueStatus == true)
+            do
             {
 
                 ///// Write Program Instructions /////
@@ -112,17 +111,16 @@ namespace ITC366_899_Matthew_Taylor_HW_6
                     Console.WriteLine("Thank you for using this application.\n");
                 }//end else
 
-            }// program continue while loop
+            } while (continueStatus == true); // program continue while loop
 
             Console.WriteLine("\nEnd Program");
         } // end main method
 
-        // ClearKeys method code located through research to ensure that characters are read correctly
         public static void ClearKeys()
         {
             while (Console.In.Peek() != -1)
                 Console.In.Read();
-        }
+        } // run after using Console.Read() to obtain single character input and clear buffer
 
         /**
          * Exercise 1
@@ -183,131 +181,68 @@ namespace ITC366_899_Matthew_Taylor_HW_6
          */
         public static void Exercise3()
         {
-            String stayLengthPrompt = "How many nights in your stay? ";
-            String pricePerNightMsg = "Price per night is ";
+            String mealPricePrompt = "Enter meal price: ";
+            String tipPercentPrompt = "Enter tip percentage as an integer (e.g. enter 5 for 5%): ";
+            String tipAmountPrompt = "Enter temp quantity (e.g. 5 for a $5 tip): ";
 
-            double stayRate = 0;
-            Console.WriteLine($"{stayLengthPrompt} ");
-            int stayLength = int.Parse(Console.ReadLine());
+            // input section
+            Console.Write($"{mealPricePrompt}");
+            String mealPriceStr = Console.ReadLine();
+            
+            Console.Write($"{tipPercentPrompt}");
+            String tipPercentStr = Console.ReadLine();
 
-            if (stayLength > 0)
-            {
-                switch (stayLength)
-                {
-                    case 1:
-                    case 2:
-                        stayRate = 200;
-                        //Console.WriteLine($"Stay rate: {stayRate.ToString("C")}");
-                        break;
-                    case 3:
-                    case 4:
-                        stayRate = 180;
-                        //Console.WriteLine($"Stay rate: {stayRate.ToString("C")}");
-                        break;
-                    case 5:
-                    case 6:
-                    case 7:
-                        stayRate = 160;
-                        //Console.WriteLine($"Stay rate: {stayRate.ToString("C")}");
-                        break;
-                    default:
-                        stayRate = 145;
-                        //Console.WriteLine($"Stay rate: {stayRate.ToString("C")}");
-                        break;
-                } // switch on stayLength to set stayRate
+            Console.Write($"{tipAmountPrompt}");
+            String tipAmountStr = Console.ReadLine();
 
-            } //valid input case, set nightly rate
-            else
-                Console.WriteLine("invalid");
-            //invalid input case
+            //value conversion
+            int tipPercent = int.Parse(tipPercentStr);
+            double mealPrice = double.Parse(mealPriceStr);
+            int tipAmount = int.Parse(tipAmountStr);
 
-            double stayInvoice = (double)stayLength * stayRate;
+            // Call methods
+            Console.WriteLine(" - Percentage Method - ");
+            tipCalculator(mealPrice,tipPercent);
+            Console.WriteLine();
+            Console.WriteLine(" - Tip Total Method - ");
+            tipCalculator(mealPrice, tipAmount);
 
-            Console.WriteLine($"{pricePerNightMsg} {stayRate.ToString("C")}");
-            Console.WriteLine($"Total for {stayLength} nights is {stayInvoice.ToString("C")}.");
 
         } // exercise 3
 
-        /**
-             * Exercise 4
-             */
+        /** Exercise 4
+        * It seems like this would be better implemented using arrays and the Reverse method
+        */
 
         public static void Exercise4()
         {
             //Console.WriteLine("exercise4");
+            int firstInt, middleInt, lastInt;
 
-            int[] numbers = { 12, 15, 22, 88 }; //had to change case from Int to int
-            int x;
-            double average;
-            double total = 0;
+            Console.Write("Enter 1st integer: ");
+            firstInt = int.Parse(Console.ReadLine());
+            Console.Write("Enter 2nd integer: ");
+            middleInt = int.Parse(Console.ReadLine());
+            Console.Write("Enter 3rd integer: ");
+            lastInt = int.Parse(Console.ReadLine());
 
-            Console.Write("\nThe numbers are...");
-            for (x = 0; x < numbers.Length; x++)
-            {
-                Console.Write($"{numbers[x],6}"); //spelling error on numbers, loop index issue. x should start at 0 and should increment after rather than before, i.e. x++ rather than ++X
-
-            } //display the numbers
-
-            Console.WriteLine();
-
-            for (x = 0; x < numbers.Length; ++x)
-            {
-                total = total + numbers[x];
-            }
-
-            average = total / numbers.Length; //needed to capitalize the L in length, 
-
-            //there was no output statement to print the average. 
-            Console.WriteLine($"The average is {average,2}");
+            Console.WriteLine($"The numbers are: {firstInt}      {middleInt}     {lastInt}");
+            reverseInts(firstInt, middleInt, lastInt);
 
         } // exercise 4
 
         public static void Exercise5()
         {
+            FancyDisplay(33, 'X'); // does not specify a decoration character
+            FancyDisplay(44, '@'); // if the FancyDisplay method is expecting a character, single quotes should be used
 
-            ///**
-
-            const int QUIT = 999;
-            List<int> numbers = new List<int>(); //need to specify a length for the array or use a list construction
-            int x = 0; // need to initialize to zero
-            int num;
-
-            double average;
-            double total = 0;
-
-            string inString;
-
-            Console.Write("Please enter a number or " + QUIT + " to quit...");
-            inString = Console.ReadLine();  //missing parenthesis 
-
-            num = Convert.ToInt32(inString); //need to specify int size? e.g. ToInt32
-
-            while ((x <= numbers.Count) && num != QUIT) // x was unassigned, will need to be initialized. also, the logical statement should be changed. 
-            {
-
-                numbers.Add(num);
-                total += numbers[x];
-                x++;
-                Console.Write("Please enter a number or " +
-                    QUIT + " to quit...");
-                inString = Console.ReadLine(); //capitalization error, missing Console.
-                num = Convert.ToInt32(inString);
-
-            }
-
-            //Console.WriteLine("QUIT selected");
-
-            Console.WriteLine("The numbers are:");
-            for (int y = 0; y < numbers.Count; y++)  //tried swapping ++x (orig) for y++, 
-                Console.Write("{0,6}", numbers[y]);
-
-            average = total / numbers.Count;
-            Console.WriteLine();
-            Console.WriteLine("The average is {0}", average); // spelling issue, missing parenthesis 
-
-            //*/
-
+            FancyDisplay(Convert.ToString(55.55),'+'); // there is no method signature that accepts only a double. Also, the double values need to be converted to strings to match the method declaration
+            FancyDisplay(Convert.ToString(77.77), '*');
+            FancyDisplay("hello");
+            FancyDisplay("goodbye", '#');
+            
         } // exercise 5 method
+
 
         /** isEqual method
          * 
@@ -315,7 +250,6 @@ namespace ITC366_899_Matthew_Taylor_HW_6
          * from stack overflow, etc, like checkEquality 
          * 
          */
-
         public static bool isEqual(bool[] arr1, bool[] arr2)
         {
             for (int i = 0; i < arr1.Length; i++)
@@ -344,7 +278,7 @@ namespace ITC366_899_Matthew_Taylor_HW_6
             const double MTOKFACTOR = 1.60934;
             double kilometers = milesEntry * MTOKFACTOR;
             return kilometers;
-        }
+        } // convert miles to kilometers
 
         public static void calculateFines(int booksOverdue,int daysOverdue)
         {
@@ -370,9 +304,44 @@ namespace ITC366_899_Matthew_Taylor_HW_6
             
             //Console.Write("{0:C2}", fineTotalStr);
             //Console.WriteLine("end calculateFines");
-        } // calculate the fine 
+        } // calculate the fine
+        public static void tipCalculator(double mealPrice, double tipPercent)
+        {
+            double tipPercentDecimal = tipPercent / 100.0;
+            double tipAmount = mealPrice * tipPercentDecimal;
+            Console.WriteLine($"Meal Price: {mealPrice}. Tip percentage {tipPercentDecimal.ToString("P")}");
+            Console.WriteLine($"Tip in dollars: {tipAmount}. Total Bill: {mealPrice + tipAmount}");
+        } // tip percentage method
+
+        public static void tipCalculator(double mealPrice, int tipTotal)
+        {
+            double tipPercent = (double)tipTotal / mealPrice;
+            Console.WriteLine($"Meal Price: {mealPrice}. Tip percentage {tipPercent.ToString("P")}");
+            Console.WriteLine($"Tip in dollars: {tipTotal}. Total Bill: {mealPrice + tipTotal}");
+        } // tip total method
+
+        public static void reverseInts(int firstInt, int middleInt, int lastInt)
+        {
+            int swap1 = lastInt;
+            int swap2 = firstInt;
+            Console.WriteLine($"The numbers are: {swap1}      {middleInt}     {swap2}");
+
+        } //swaps the order of the first and last integer in a sequence of 3
+
+        private static void FancyDisplay(int num, char decoration) // assigning 'X' to decoration at method call will lock in the decoration character, should be passed as an argument
+        {
+            Console.WriteLine("{0}{0}{0}  {1}  {0}{0}{0}\n", decoration, num); // a third variable is not provided in the method, order is wrong to match provided output
+        }
+        private static void FancyDisply(double num, char decoration = 'X') // allow decoration to be set by method call argument
+        {
+            Console.WriteLine("{0}{0}{0}  {1}  {0}{0}{0}\n", decoration, num.ToString("C")); // 2nd placeholder variable not used
+        }
+        private static void FancyDisplay(String word, char decoration = 'X') // method declaration doesn't specify the data type for word
+        {
+            Console.WriteLine("{0}{0}{0}  {1}  {0}{0}{0}\n", decoration, word); // extra second placeholder variable called, should be {0}
+        }
 
 
-} // end class
+    } // end class
 
-    } // end namespace
+} // end namespace

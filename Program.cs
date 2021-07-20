@@ -124,10 +124,11 @@ namespace ITC366_899_Matthew_Taylor_HW_6
 
         /**
          * Exercise 1
-         * Write a method to accept 8 test scores, calculate the arithmetic mean, and display the
-         * deviation from the mean for each score
+         * 
+         * Write a method to convert a distance in miles to a distance in kilometers. The milesToKilometers
+         * method accepts a double parameter and returns a double. 
          */
-
+        
         public static void Exercise1()
         {
             String entryPrompt = "Enter a distance in miles >> ";
@@ -142,21 +143,13 @@ namespace ITC366_899_Matthew_Taylor_HW_6
 
         /**
          * Exercise 2
-         * Input (5) daily temps in degrees farenheit, ranging from -30 to 130 degrees. 
-         * If Temp is out of range, force reentry
-         * If temp n > temp n-1 > ... > temp_1, "enter getting cooler"
-         * If temp_n < temp_n-1 < ... < n_1, display "getting warmer"
-         * If there is not a specific increasing or decreasing trend, display "mixed bag"
-         * Finally, display the temps in order and the average
          * 
-         * I created test arrays of booleans and used a comparison method from 
-         * https://stackoverflow.com/questions/4423318/how-to-compare-arrays-in-c
+         * A method has been written to calculate the total fines for varying quantities of overdue books and days overdue. The method then returns a fine total which is displayed by the Exercise2() method.
          * 
          */
         public static void Exercise2()
         {
 
-            
             String overdueBooksPrompt = "Enter the number of books that are overdue >> ";
             Console.Write(overdueBooksPrompt);
             String booksOverdueStr = Console.ReadLine();
@@ -166,23 +159,21 @@ namespace ITC366_899_Matthew_Taylor_HW_6
             String daysOverdueStr = Console.ReadLine();
             int daysOverdue = int.Parse(daysOverdueStr);
 
-            calculateFines(booksOverdue, daysOverdue);
+            String fineTotalStr = calculateFines(booksOverdue, daysOverdue);
 
-
+            Console.Write($"The fine for {booksOverdue} book(s) for {daysOverdue} day(s) is {fineTotalStr} ");
 
         } // exercise 2
 
         /** Exercise 3
          * 
+         * Tip calculator
          * 
-         * Prompt user to enter number of days for a restort stay.
-         * Display price per night and total price.
-         *
          */
         public static void Exercise3()
         {
             String mealPricePrompt = "Enter meal price: ";
-            String tipPercentPrompt = "Enter tip percentage as an integer (e.g. enter 5 for 5%): ";
+            String tipPercentPrompt = "Enter tip percentage as an integer, e.g. 20 for 20%: ";
             String tipAmountPrompt = "Enter temp quantity (e.g. 5 for a $5 tip): ";
 
             // input section
@@ -227,7 +218,7 @@ namespace ITC366_899_Matthew_Taylor_HW_6
             lastInt = int.Parse(Console.ReadLine());
 
             Console.WriteLine($"The numbers are: {firstInt}      {middleInt}     {lastInt}");
-            reverseInts(firstInt, middleInt, lastInt);
+            reverseInts(ref firstInt, ref middleInt, ref lastInt);
 
         } // exercise 4
 
@@ -280,7 +271,7 @@ namespace ITC366_899_Matthew_Taylor_HW_6
             return kilometers;
         } // convert miles to kilometers
 
-        public static void calculateFines(int booksOverdue,int daysOverdue)
+        public static String calculateFines(int booksOverdue,int daysOverdue)
         {
             const double SMALLFINE = 0.1;
             const double LARGEFINE = 0.2;
@@ -299,34 +290,61 @@ namespace ITC366_899_Matthew_Taylor_HW_6
                 fineTotal = booksOverdue * (7 * SMALLFINE + (daysOverdue - 7) * LARGEFINE);
                 fineTotalStr = fineTotal.ToString("C");
             }
-            
-            Console.Write($"The fine for {booksOverdue} book(s) for {daysOverdue} day(s) is {fineTotalStr} ");
+
+            return fineTotalStr;
             
             //Console.Write("{0:C2}", fineTotalStr);
             //Console.WriteLine("end calculateFines");
         } // calculate the fine
-        public static void tipCalculator(double mealPrice, double tipPercent)
+
+        /// <summary>   Method to calculate a tip based on the meal price and a percentage value for a tip
+        /// 
+        /// </summary>
+        /// <param name="mealPrice"></param>
+        /// <param name="tipPercent"></param>
+        public static void tipCalculator(double mealPrice, int tipPercent)
         {
-            double tipPercentDecimal = tipPercent / 100.0;
-            double tipAmount = mealPrice * tipPercentDecimal;
-            Console.WriteLine($"Meal Price: {mealPrice}. Tip percentage {tipPercentDecimal.ToString("P")}");
+            double tipDecimal = (double)tipPercent / 100.0;
+            double tipAmount = mealPrice * tipDecimal;
+            Console.WriteLine($"Meal Price: {mealPrice}. Tip percentage {tipDecimal.ToString("P")}");
             Console.WriteLine($"Tip in dollars: {tipAmount}. Total Bill: {mealPrice + tipAmount}");
         } // tip percentage method
 
-        public static void tipCalculator(double mealPrice, int tipTotal)
+
+        /// <summary>   Method to calculate the tip percentage based on the total meal price 
+        ///             and a set tip value
+        /// 
+        /// </summary>
+        /// <param name="mealPrice"></param>
+        /// <param name="tipTotal"></param>
+        public static void tipCalculator(double mealPrice, double tipTotal)
         {
-            double tipPercent = (double)tipTotal / mealPrice;
+            double tipPercent = tipTotal / mealPrice;
             Console.WriteLine($"Meal Price: {mealPrice}. Tip percentage {tipPercent.ToString("P")}");
             Console.WriteLine($"Tip in dollars: {tipTotal}. Total Bill: {mealPrice + tipTotal}");
         } // tip total method
 
-        public static void reverseInts(int firstInt, int middleInt, int lastInt)
+
+        /// <summary> Method that accepts 3 integers and reverses their order
+        /// 
+        /// </summary>
+        /// <param name="firstInt"></param>
+        /// <param name="middleInt"></param>
+        /// <param name="lastInt"></param>
+        public static void reverseInts(ref int firstInt, ref int middleInt, ref int lastInt)
         {
             int swap1 = lastInt;
             int swap2 = firstInt;
             Console.WriteLine($"The numbers are: {swap1}      {middleInt}     {swap2}");
 
+            // If this were a longer list of integers, I would implement a loop to populate an 
+            // integer array and then use an array method to reverse the order of the integers
+            // and iterate through the reversed array elements.
+           
         } //swaps the order of the first and last integer in a sequence of 3
+
+
+
 
         private static void FancyDisplay(int num, char decoration) // assigning 'X' to decoration at method call will lock in the decoration character, should be passed as an argument
         {
@@ -334,13 +352,13 @@ namespace ITC366_899_Matthew_Taylor_HW_6
         }
         private static void FancyDisply(double num, char decoration = 'X') // allow decoration to be set by method call argument
         {
-            Console.WriteLine("{0}{0}{0}  {1}  {0}{0}{0}\n", decoration, num.ToString("C")); // 2nd placeholder variable not used
+            String dollars = num.ToString("C");
+            Console.WriteLine("{0}{0}{0}  {1}  {0}{0}{0}\n", decoration, dollars); // 2nd placeholder variable not used
         }
         private static void FancyDisplay(String word, char decoration = 'X') // method declaration doesn't specify the data type for word
         {
             Console.WriteLine("{0}{0}{0}  {1}  {0}{0}{0}\n", decoration, word); // extra second placeholder variable called, should be {0}
         }
-
 
     } // end class
 
